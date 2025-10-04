@@ -1,15 +1,13 @@
-'use client'
+"use client";
 import { ArrowRight02Icon } from "@hugeicons/core-free-icons/index";
 import { PrimaryButton } from "./components/Button";
 import { FluentEmoji } from "./components/FluentEmoji";
 
-import { useRouter } from 'next/navigation'
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import { useRouter } from "next/navigation";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 export default function Home() {
-
-const router = useRouter();
+  const router = useRouter();
 
   return (
    
@@ -22,7 +20,7 @@ const router = useRouter();
         <p className="text-neutral-600 text-lg">Lorem ipsum</p>
 
         <div className="mt-6">
-          <PrimaryButton onClick={() => router.push('/login')}>
+          <PrimaryButton onClick={() => router.push("/login")}>
             <div className="flex items-center gap-1">
               Get started <HugeiconsIcon icon={ArrowRight02Icon} />
             </div>
