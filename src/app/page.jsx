@@ -1,10 +1,14 @@
+'use client'
 import { FluentEmoji } from "./components/FluentEmoji";
-
+import Image from "next/image";
+import { useRouter } from 'next/navigation'
+import { GoogleOAuthProvider } from "@react-oauth/google";
 export default function Home() {
 
 const router = useRouter();
 
   return (
+   
     <main className="flex justify-center items-center gap-8 bg-gradient-to-b from-transparent to-sky-100 w-screen h-screen">
       {/* Title text */}
       <div>
@@ -14,10 +18,15 @@ const router = useRouter();
         <p className="text-neutral-600 text-lg">Lorem ipsum</p>
       </div>
 
+       <button type="button" onClick={() => router.push('/login')}>
+     Login
+    </button>
+
       {/* Welcome icon */}
       <div>
         <FluentEmoji emoji="👋" size="6rem" />
       </div>
     </main>
+    
   );
 }
