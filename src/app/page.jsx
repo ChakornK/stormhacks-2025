@@ -1,7 +1,12 @@
 import Image from "next/image";
-
+import { useRouter } from 'next/navigation'
+import { GoogleOAuthProvider } from "@react-oauth/google";
 export default function Home() {
+
+const router = useRouter();
+
   return (
+    <GoogleOAuthProvider clientId="380605322503-dm6qi8gculgbji1u5u0rhuhg7gcfls5b.apps.googleusercontent.com">
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         <Image
@@ -12,6 +17,9 @@ export default function Home() {
           height={38}
           priority
         />
+           <button type="button" onClick={() => router.push('/Login')}>
+            Login
+          </button>
         <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
           <li className="mb-2 tracking-[-.01em]">
             Get started by editing{" "}
@@ -98,6 +106,8 @@ export default function Home() {
           Go to nextjs.org →
         </a>
       </footer>
+      
     </div>
+    </GoogleOAuthProvider>
   );
 }
