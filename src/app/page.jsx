@@ -8,7 +8,7 @@ export default function Home() {
 const router = useRouter();
 
   return (
-    <GoogleOAuthProvider clientId="380605322503-dm6qi8gculgbji1u5u0rhuhg7gcfls5b.apps.googleusercontent.com">
+   
     <main className="flex justify-center items-center gap-8 bg-gradient-to-b from-transparent to-sky-100 w-screen h-screen">
       {/* Title text */}
       <div>
@@ -27,6 +27,6 @@ const router = useRouter();
         <FluentEmoji emoji="👋" size="6rem" />
       </div>
     </main>
-    </GoogleOAuthProvider>
+    
   );
 }

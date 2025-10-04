@@ -16,7 +16,7 @@ export default function login(){
 
   return(
     <>
-     <GoogleOAuthProvider clientId="380605322503-dm6qi8gculgbji1u5u0rhuhg7gcfls5b.apps.googleusercontent.com">
+     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
       <GoogleLogin
         onSuccess={(credentialResponse)=> {
           var credentialResponseDecoded = jwtDecode(credentialResponse.credential);
