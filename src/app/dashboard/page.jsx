@@ -31,8 +31,13 @@ const progress = 50;
     return(
 
      <main className="p-4 flex items-center justify-center h-auto">
+
+        
          <div className=" max-w-5xl w-full flex items-center justify-center">
+            
              <div className="grid grid-cols-3 gap-4">
+                <h1 className="col-span-3 text-xl ">welcome</h1>
+
                  <RoundedBox className="h-[20vh]">
                      <p className="text-center">
                          streak
