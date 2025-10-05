@@ -1,9 +1,5 @@
 import mongoose from "mongoose";
 
-const ProgressSchema = new mongoose.Schema({
-  completedTasks: { type: Number, required: true },
-});
-
 const UserSchema = new mongoose.Schema({
   gID: { type: String, required: true },
   name: { type: String, required: true },
@@ -11,7 +7,7 @@ const UserSchema = new mongoose.Schema({
   lastActivity: { type: Number, required: true },
   progressTracker: {
     type: Map,
-    of: ProgressSchema,
+    of: Number,
   },
   weeklyActivity: {
     type: [Number],

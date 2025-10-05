@@ -18,7 +18,7 @@ import ReactKatex from "@pkasila/react-katex";
 import { PrimaryButton } from "@/app/components/Button";
 
 export default function LessonPath() {
-  const { token, progressTracking } = useContext(UserContext);
+  const { token, progressTracker } = useContext(UserContext);
 
   const { unit } = useParams();
   const [openLesson, setOpenLesson] = useState(false);
@@ -41,8 +41,6 @@ export default function LessonPath() {
       }
     );
   };
-
-  // Variants for sliding
 
   return (
     <main className="p-8">
@@ -73,9 +71,7 @@ export default function LessonPath() {
                   style={{ top: `${offset}px` }}
                 >
                   <CircularButton
-                    active={
-                      ((progressTracking && progressTracking[unit]) || 0) >= i
-                    }
+                    active={((progressTracker ?? {})[unit] ?? 0) >= i}
                     onClick={() => {
                       (async () => {
                         const { text, progress } = await (
@@ -159,8 +155,15 @@ export default function LessonPath() {
   );
 }
 
-export function LessonModal({ isOpen, text = "", onClose, setProblemText }) {
-  const { token } = useContext(UserContext);
+export function LessonModal({
+  isOpen,
+  text = "",
+  onClose,
+  setProblemText,
+  unit,
+  lesson,
+}) {
+  const { token, updateUserState } = useContext(UserContext);
 
   const [qnum, setQnum] = useState(1);
   useEffect(() => {
@@ -273,6 +276,22 @@ export function LessonModal({ isOpen, text = "", onClose, setProblemText }) {
                     })
                   ).json();
                   setProblemText(text);
+                  if (qnum === 10 && correctStatus === 2) {
+                    updateUserState(
+                      await (
+                        await fetch("/api/completion", {
+                          method: "POST",
+                          headers: {
+                            authorization: `Bearer ${token}`,
+                          },
+                          body: JSON.stringify({
+                            unit,
+                            lesson,
+                          }),
+                        })
+                      ).json()
+                    );
+                  }
                   if (correctStatus === 2) {
                     setQnum(qnum + 1);
                   }
