@@ -103,56 +103,56 @@ const progress = 50;
                                  <div className="flex-1">
                                      <div className="border-t border-gray-600" />
                                  </div>
-                            </div>
-                        );
-                    })}
-
-                    {/* Y axis (vertical) */}
-                    <div
-                         style={{
-                          position: "absolute",
-                         left: `${yAxisLabelWidth - 2}px`,
-                         bottom: 18,
-                         height: `${chartHeight}px`,
-                         width: "2px",
-                         }}
-                         className="bg-black"
-                    />
-
-                     {/* X axis (horizontal) */}
-                     <div
-                     style={{
-                     position: "absolute",
-                     left: `${yAxisLabelWidth}px`,
-                     right: 0,
-                     bottom: 18,
-                     height: "2px",
-                     }}
-                     className="bg-black"
-                     />
-
-                {/* Bars area (positioned to the right of the label column) */}
-                 <div
-                 style={{
-                 position: "absolute",
-                 left: `${yAxisLabelWidth}px`,
-                 bottom: 0,
-                 height: `${chartHeight}px`,
-                 right: 0,
-                 }}
-                 className="flex items-end space-x-4 px-2"
-                 >
-                     {data.map((item) => {
-                     const heightPx = (item.value / scaleMax) * chartHeight;
-                     return (
-                         <div key={item.name} className="flex flex-col items-center">
-                         <div
-                             className="bg-white w-3"
-                             style={{ height: `${heightPx}px` }}
-                         />
-                         <span className="text-white text-[10px] mt-1">{item.name}</span>
-                         </div>
+                                </div>
                                  );
+                            })}
+
+                            {/* Y axis (vertical) */}
+                            <div
+                                 style={{
+                                 position: "absolute",
+                                 left: `${yAxisLabelWidth - 2}px`,
+                                 bottom: 18,
+                                 height: `${chartHeight}px`,
+                                 width: "2px",
+                                 }}
+                                 className="bg-black"
+                            />
+
+                            {/* X axis (horizontal) */}
+                             <div
+                                 style={{
+                                 position: "absolute",
+                                 left: `${yAxisLabelWidth}px`,
+                                 right: 0,
+                                 bottom: 18,
+                                 height: "2px",
+                                 }}
+                                 className="bg-black"
+                             />
+
+                            {/* Bars area (positioned to the right of the label column) */}
+                             <div
+                                 style={{
+                                 position: "absolute",
+                                 left: `${yAxisLabelWidth}px`,
+                                 bottom: 0,
+                                 height: `${chartHeight}px`,
+                                 right: 0,
+                                 }}
+                                 className="flex items-end space-x-4 px-2"
+                             >
+                             {data.map((item) => {
+                                 const heightPx = (item.value / scaleMax) * chartHeight;
+                                 return (
+                                     <div key={item.name} className="flex flex-col items-center">
+                                         <div
+                                             className="bg-white w-3"
+                                             style={{ height: `${heightPx}px` }}
+                                         />
+                                         <span className="text-white text-[10px] mt-1">{item.name}</span>
+                                         </div>
+                                     );
                                  })}
                              </div>
                          </div>
