@@ -2,26 +2,12 @@ export const CircularButton = ({ children, onClick }) => {
   return (
     <button
       type="button"
-      className="
-      bg-sky-400 
-      active:mt-0 
-      
-      w-30 h-18 
-      border-sky-500 
-      border-b-5
-      active:border-b-0 
-      active:mt-3
-      rounded-[100%]
-      text-white text-lg 
-      flex items-center justify-center 
-      shadow-[0_10px_0_1px_#00A6F4]
-
-      transition-all duration-75 ease-out 
-      cursor-pointer
-      "
+      className="flex items-stretch bg-sky-500 active:mt-3 pb-3 active:pb-0 active:border-b-0 rounded-[100%/90%] active:rounded-[100%] w-30 h-18 active:h-15 text-white text-lg transition-all duration-75 ease-out cursor-pointer"
       onClick={onClick}
     >
-      {children}
+      <div className="flex justify-center items-center bg-sky-400 rounded-[100%] grow">
+        {children}
+      </div>
     </button>
   );
 };
