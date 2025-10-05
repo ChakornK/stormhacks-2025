@@ -197,7 +197,7 @@ export function LessonModal({
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="relative bg-white shadow-2xl p-8 pr-84 rounded-2xl w-full max-w-[calc(100vw-4rem)] h-full max-h-[calc(100vh-4rem)]"
+            className="relative bg-white shadow-2xl p-8 pr-84 rounded-2xl w-[calc(100vw-4rem)] max-w-4xl h-full max-h-[calc(100vh-4rem)]"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
