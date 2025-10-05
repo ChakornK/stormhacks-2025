@@ -1,27 +1,40 @@
-'use client'
+"use client";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import { useRouter } from "next/navigation";
+import { useCallback, useContext } from "react";
+import { UserContext } from "../context";
 
 export default function Login() {
+  const router = useRouter();
+  const { updateUserState } = useContext(UserContext);
 
-  const handleSuccess = (credentialResponse) => {
+  const handleSuccess = useCallback(async (credentialResponse) => {
     const decoded = jwtDecode(credentialResponse.credential);
-    console.log("Decoded token:", decoded);
-  };
+    await cookieStore.set("token", credentialResponse.credential);
+    updateUserState({
+      token: credentialResponse.credential,
+      name: decoded.given_name,
+      picture: decoded.picture,
+    });
+    router.push("/dashboard");
+  });
 
-  const handleError = () => {
+  const handleError = useCallback(() => {
     console.log("Login Failed");
-  };
+  });
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-sky-50 to-white">
-      <div className="bg-white shadow-xl border border-gray-200 rounded-2xl p-10 w-[90%] max-w-md text-center">
-        <h1 className="text-4xl font-bold bg-gradient-to-b from-sky-400 to-sky-600 bg-clip-text text-transparent mb-6">
+    <div className="flex justify-center items-center bg-gradient-to-b from-sky-50 to-white h-full">
+      <div className="bg-white shadow-xl p-10 border border-gray-200 rounded-2xl w-[90%] max-w-md text-center">
+        <h1 className="bg-clip-text bg-gradient-to-b from-sky-400 to-sky-600 mb-6 font-bold text-transparent text-4xl">
           Welcome!
         </h1>
-        <p className="text-gray-500 mb-8">Sign in to continue to Math Helper</p>
+        <p className="mb-8 text-gray-500">Sign in to continue to Math Helper</p>
 
-        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
+        <GoogleOAuthProvider
+          clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+        >
           <div className="flex justify-center">
             <GoogleLogin
               onSuccess={handleSuccess}
