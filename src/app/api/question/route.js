@@ -23,6 +23,8 @@ const numberOfQuestions = 10;
 //   }
 // }
 
+// please ignore this 😭🙏
+// ts so mid 💔🎋
 questionBank["1"] = {};
 questionBank["1"]["1"] = [];
 questionBank["1"]["2"] = [];
