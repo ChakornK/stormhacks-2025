@@ -1,16 +1,28 @@
 "use client";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import { useRouter } from "next/navigation";
+import { useCallback, useContext } from "react";
+import { UserContext } from "../context";
 
 export default function Login() {
-  const handleSuccess = (credentialResponse) => {
-    const decoded = jwtDecode(credentialResponse.credential);
-    console.log("Decoded token:", decoded);
-  };
+  const router = useRouter();
+  const { updateUserState } = useContext(UserContext);
 
-  const handleError = () => {
+  const handleSuccess = useCallback(async (credentialResponse) => {
+    const decoded = jwtDecode(credentialResponse.credential);
+    await cookieStore.set("token", credentialResponse.credential);
+    updateUserState({
+      token: credentialResponse.credential,
+      name: decoded.given_name,
+      picture: decoded.picture,
+    });
+    router.push("/dashboard");
+  });
+
+  const handleError = useCallback(() => {
     console.log("Login Failed");
-  };
+  });
 
   return (
     <div className="flex justify-center items-center bg-gradient-to-b from-sky-50 to-white h-full">
