@@ -1,7 +1,7 @@
 // cont growth (e)
 export default {
   generateText(inputs) {
-    return `A bank account grows continuously at ${inputs[0].r}% per year. If the initial deposit is $${inputs[0].P}, find the balance after ${inputs[0].t} years using A = P * e^{rt}.`;
+    return `A bank account grows continuously at ${inputs[0].r}% per year. If the initial deposit is \\$${inputs[0].P}, find the balance after ${inputs[0].t} years using A = P * e^{rt}.`;
   },
   generateValues() {
     const P = Math.floor(Math.random() * 1000) + 500;

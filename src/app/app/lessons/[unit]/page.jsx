@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useContext } from "react";
 import "katex/dist/katex.min.css";
-import { BlockMath } from "react-katex";
 import { motion, AnimatePresence } from "framer-motion";
 import { useParams } from "next/navigation";
 import { Dropdown } from "@/app/components/Dropdown";
@@ -14,6 +13,7 @@ import {
   Cancel01Icon,
 } from "@hugeicons/core-free-icons/index";
 import { UserContext } from "@/app/context";
+import ReactKatex from "@pkasila/react-katex";
 
 export default function LessonPath() {
   const { token } = useContext(UserContext);
@@ -167,7 +167,7 @@ export function LessonModal({ isOpen, text = "", onClose }) {
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="relative bg-white shadow-2xl p-4 rounded-2xl w-full max-w-xl"
+            className="relative bg-white shadow-2xl p-4 rounded-2xl w-full max-w-[calc(100vw-4rem)]"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
@@ -181,12 +181,9 @@ export function LessonModal({ isOpen, text = "", onClose }) {
             </button>
             <h2 className="mb-4 font-semibold text-2xl">Lesson Question</h2>
             <div className="text-gray-700 text-lg">
-              <BlockMath
-                math={text
-                  .replaceAll("\\(", "")
-                  .replaceAll("\\)", "")
-                  .replaceAll(",", " \\\\ ")}
-              />
+              <ReactKatex>
+                {text.replaceAll("\\(", "$").replaceAll("\\)", "$")}
+              </ReactKatex>
             </div>
           </motion.div>
         </motion.div>

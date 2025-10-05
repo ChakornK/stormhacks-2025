@@ -2,7 +2,7 @@
 export default {
   generateText(inputs) {
     const { a, b, c, d, e, f } = inputs[0];
-    return `A shop sells pencils and erasers. Pencils cost $${a} each and erasers $${b} each. If 3 pencils and 2 erasers cost $${c}, and 2 pencils and 5 erasers cost $${d}, find the price of one pencil and one eraser.`;
+    return `A shop sells pencils and erasers. Pencils cost \\$${a} each and erasers \\$${b} each. If 3 pencils and 2 erasers cost \\$${c}, and 2 pencils and 5 erasers cost \\$${d}, find the price of one pencil and one eraser.`;
   },
   generateValues() {
     const a = Math.floor(Math.random() * 5) + 1;

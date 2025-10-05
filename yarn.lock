@@ -407,6 +407,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pkasila/react-katex@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "@pkasila/react-katex@npm:1.2.2"
+  dependencies:
+    katex: "npm:^0.16.0"
+    prop-types: "npm:^15.8.1"
+    react: "npm:^18.2.0"
+  checksum: 10c0/58064ac4be489b356283e1f79d09ff307b017fef4cd592a5086d92c642d4d8db8cf8d175733b14c45c6509fc477160132e94418c929b363ed019cda5dc16fba0
+  languageName: node
+  linkType: hard
+
 "@react-oauth/google@npm:^0.12.2":
   version: 0.12.2
   resolution: "@react-oauth/google@npm:0.12.2"
@@ -861,7 +872,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loose-envify@npm:^1.4.0":
+"loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -1127,7 +1138,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.8.1":
+"prop-types@npm:15.8.1, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -1163,22 +1174,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-katex@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "react-katex@npm:3.1.0"
-  dependencies:
-    katex: "npm:^0.16.0"
-  peerDependencies:
-    prop-types: ^15.8.1
-    react: ">=15.3.2 <20"
-  checksum: 10c0/a61eb2c19a2dc384ad5864a27af66f40c504643f984150f4e270373df88293c2586779b53b2ee7ee4e75076f3c5284b36f425bbc1021d164ccb2997d11d8678f
-  languageName: node
-  linkType: hard
-
 "react@npm:19.1.0":
   version: 19.1.0
   resolution: "react@npm:19.1.0"
   checksum: 10c0/530fb9a62237d54137a13d2cfb67a7db6a2156faed43eecc423f4713d9b20c6f2728b026b45e28fcd72e8eadb9e9ed4b089e99f5e295d2f0ad3134251bdd3698
+  languageName: node
+  linkType: hard
+
+"react@npm:^18.2.0":
+  version: 18.3.1
+  resolution: "react@npm:18.3.1"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+  checksum: 10c0/283e8c5efcf37802c9d1ce767f302dd569dd97a70d9bb8c7be79a789b9902451e0d16334b05d73299b20f048cbc3c7d288bbbde10b701fa194e2089c237dbea3
   languageName: node
   linkType: hard
 
@@ -1306,6 +1314,7 @@ __metadata:
     "@google/generative-ai": "npm:^0.24.1"
     "@hugeicons/core-free-icons": "npm:^1.1.0"
     "@hugeicons/react": "npm:^1.1.1"
+    "@pkasila/react-katex": "npm:^1.2.2"
     "@react-oauth/google": "npm:^0.12.2"
     "@tailwindcss/postcss": "npm:^4"
     framer-motion: "npm:^12.23.22"
@@ -1318,7 +1327,6 @@ __metadata:
     prop-types: "npm:15.8.1"
     react: "npm:19.1.0"
     react-dom: "npm:19.1.0"
-    react-katex: "npm:^3.1.0"
     tailwindcss: "npm:^4"
   languageName: unknown
   linkType: soft
