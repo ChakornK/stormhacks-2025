@@ -30,7 +30,7 @@ export default function Login() {
         <h1 className="bg-clip-text bg-gradient-to-b from-sky-400 to-sky-600 mb-6 font-bold text-transparent text-4xl">
           Welcome!
         </h1>
-        <p className="mb-8 text-gray-500">Sign in to continue to Math Helper</p>
+        <p className="mb-8 text-gray-500">Sign in to continue to Mastermath</p>
 
         <GoogleOAuthProvider
           clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}

@@ -27,7 +27,7 @@ export const NavBar = () => {
           }}
         >
           <h1 className="bg-clip-text bg-gradient-to-b from-sky-400 to-sky-500 font-bold text-transparent text-3xl">
-            Math helper
+            Mastermath
           </h1>
         </button>
       </div>
