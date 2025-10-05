@@ -5,9 +5,11 @@ import {
   setLesson,
   setCurrentQuestion,
   getCurrentQuestion,
+  getProgress,
 } from "@/app/globalState";
 
 const questionBank = {};
+const numberOfQuestions = 10;
 
 for (const unit of fs.readdirSync("./src/questions")) {
   if (!questionBank[unit]) questionBank[unit] = {};
@@ -33,19 +35,20 @@ export async function GET(req) {
   if (!unit || !lesson)
     return Response.json({ error: "Missing unit/lesson" }, { status: 400 });
 
-  setLesson(token, unit, lesson);
-
   const collection = questionBank[unit][lesson];
-  const question = collection[Math.floor(Math.random() * collection.length)];
+  setLesson(token, unit, lesson, numberOfQuestions);
 
+  const question = collection[Math.floor(Math.random() * collection.length)];
   const values = question.generateValues();
+
   setCurrentQuestion(token, values.inputs, values.solutions);
+  const progress = getProgress(token);
 
   return Response.json({
     text: question.generateText(values.inputs),
+    progress
   });
 }
-
 
 export async function POST(req) {
   const token = req.headers.get("authorization")?.replace("Bearer ", "");
