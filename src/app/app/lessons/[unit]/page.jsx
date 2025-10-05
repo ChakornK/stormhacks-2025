@@ -16,6 +16,7 @@ import {
 import { UserContext } from "@/app/context";
 import ReactKatex from "@pkasila/react-katex";
 import { PrimaryButton } from "@/app/components/Button";
+import { Chatbot } from "@/app/components/Chatbot";
 
 export default function LessonPath() {
   const { token, progressTracker } = useContext(UserContext);
@@ -311,6 +312,9 @@ export function LessonModal({
                     : "Next question"
                   : "Skip question"}
               </PrimaryButton>
+            </div>
+            <div className="top-8 right-8 bottom-28 absolute w-72">
+              <Chatbot />
             </div>
           </motion.div>
         </motion.div>
