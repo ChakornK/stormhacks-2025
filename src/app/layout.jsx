@@ -2,7 +2,7 @@
 
 import "./globals.css";
 import { NavBar } from "./components/NavBar";
-import { UserContext } from "./context";
+import { LessonsPaginationContext, UserContext } from "./context";
 import { useCallback, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { usePathname, useRouter } from "next/navigation";
@@ -73,6 +73,8 @@ export default function RootLayout({ children }) {
       updateUserState(userData);
     })();
   }, [userState.token]);
+
+  const [[lessons_page, lessons_direction], lessons_setPage] = useState([0, 0]);
 
   return (
     <html lang="en">
