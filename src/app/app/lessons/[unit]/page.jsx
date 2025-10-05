@@ -3,6 +3,7 @@ import { useParams } from "next/navigation";
 import { Dropdown } from "@/app/components/Dropdown";
 import { CircularButton } from "@/app/components/CircleButton";
 import { StarButton } from "@/app/components/StarButton";
+import { NextUnitButton} from "@/app/components/NextUnitButton"
 
 export default function LessonPath() {
   const { unit } = useParams();
@@ -10,11 +11,8 @@ export default function LessonPath() {
   const buttonOffsets = [0, -60, 60, -60, 60];
 
   return (
-    <main className="p-8">
-      <Dropdown
-        className="bg-sky-400 px-6 py-2 inline-block
-     border-sky-500 border-b-6 rounded-2xl text-white text-lg cursor-pointer"
-      >
+    <main className="p-8 relative min-h-screen">
+      <Dropdown className="bg-sky-400 px-6 py-2 inline-block border-sky-500 border-b-6 rounded-2xl text-white text-lg cursor-pointer">
         <h1 className="text-4xl">Unit {unit}</h1>
       </Dropdown>
 
@@ -43,6 +41,10 @@ export default function LessonPath() {
             <StarButton active={false} />
           </div>
         </div>
+      </div>
+
+      <div className="fixed bottom-8 right-8">
+        <NextUnitButton onClick={() => console.log("Next unit")} />
       </div>
     </main>
   );
