@@ -38,7 +38,6 @@ const progress = 50;
              <div className="grid grid-cols-3 gap-4">
                 <h1 className="col-span-3 text-xl ">welcome</h1>
 
-        
                  <RoundedBox className="h-[20vh]">
                      <p className="text-center">
                          streak
