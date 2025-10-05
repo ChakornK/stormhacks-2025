@@ -1,7 +1,6 @@
 "use client";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useContext } from "react";
 import { UserContext } from "../context";
 
