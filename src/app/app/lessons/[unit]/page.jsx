@@ -45,7 +45,14 @@ export default function LessonPath() {
   return (
     <main className="p-8">
       <div>
-        <Dropdown className="inline-block bg-sky-400 px-6 py-2 border-sky-500 border-b-6 rounded-2xl text-white text-lg cursor-pointer">
+        <Dropdown
+          className="inline-block bg-sky-400 px-6 py-2 border-sky-500 border-b-6 rounded-2xl text-white text-lg cursor-pointer"
+          options={Array(5)
+            .fill(0)
+            .map((_, i) => `Unit ${i + 1}`)}
+          current={`Unit ${unit}`}
+          onSelect={(e) => router.push(`/app/lessons/${e.split(" ")[1]}`)}
+        >
           <h1 className="text-4xl">Unit {unit}</h1>
         </Dropdown>
 
