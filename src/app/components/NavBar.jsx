@@ -103,7 +103,7 @@ const LoggedInUser = () => {
               className="hover:bg-red-500 text- hover:text-white"
               onClick={async () => {
                 await cookieStore.delete("token");
-                setUserState({});
+                setUserState({ token: "unset" });
                 setShowMenu(false);
                 router.push("/");
               }}

@@ -5,6 +5,7 @@ import { NavBar } from "./components/NavBar";
 import { UserContext } from "./context";
 import { useCallback, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function RootLayout({ children }) {
   const [userState, setUserState] = useState({});
@@ -43,6 +44,20 @@ export default function RootLayout({ children }) {
       });
     })();
   }, []);
+
+  const router = useRouter();
+  const pathname = usePathname();
+  useEffect(() => {
+    if (["/", "/login"].includes(pathname)) {
+      if (userState.token && userState.token !== "unset") {
+        router.push("/dashboard");
+      }
+    } else {
+      if (userState.token === "unset") {
+        router.push(`/login?return=${pathname}`);
+      }
+    }
+  }, [userState.token, pathname]);
 
   return (
     <html lang="en">
