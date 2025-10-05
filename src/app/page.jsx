@@ -18,7 +18,9 @@ export default function Home() {
         <h1 className="bg-clip-text bg-gradient-to-b from-sky-400 to-sky-500 font-bold text-transparent text-6xl">
           Math helper
         </h1>
-        <p className="text-neutral-600 text-lg">Lorem ipsum</p>
+        <p className="text-neutral-600 text-lg">
+          Practice math in a more engaging way
+        </p>
 
         <div className="mt-6">
           <PrimaryButton onClick={() => router.push("/login")}>
