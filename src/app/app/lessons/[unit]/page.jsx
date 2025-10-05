@@ -16,7 +16,7 @@ import { UserContext } from "@/app/context";
 import ReactKatex from "@pkasila/react-katex";
 
 export default function LessonPath() {
-  const { token } = useContext(UserContext);
+  const { token, progressTracking } = useContext(UserContext);
 
   const { unit } = useParams();
   const [openLesson, setOpenLesson] = useState(false);
@@ -71,7 +71,9 @@ export default function LessonPath() {
                   style={{ top: `${offset}px` }}
                 >
                   <CircularButton
-                    active={i === 0}
+                    active={
+                      ((progressTracking && progressTracking[unit]) || 0) >= i
+                    }
                     onClick={() => {
                       (async () => {
                         const { text, progress } = await (
