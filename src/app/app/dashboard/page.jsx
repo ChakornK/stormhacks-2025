@@ -4,8 +4,12 @@ import { useContext } from "react";
 
 import { LessonsPaginationContext, UserContext } from "@/app/context";
 import { FluentEmoji } from "@/app/components/FluentEmoji";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowRight02Icon } from "@hugeicons/core-free-icons/index";
+import { useRouter } from "next/navigation";
 
 export default function dashboard() {
+  const router = useRouter();
   const { name, streak, progressTracker } = useContext(UserContext);
   const current = progressTracker
     ? Object.values(progressTracker).reduce((a, b) => a + b, 0)
@@ -14,12 +18,30 @@ export default function dashboard() {
   return (
     <main className="flex justify-center items-center p-4 h-auto">
       <div className="flex justify-center items-center w-full max-w-5xl">
-        <div className="gap-4 grid grid-cols-2">
+        <div className="gap-4 grid grid-cols-3">
           <h1 className="col-span-3 text-3xl">
             welcome, {name === NaN ? "guest" : name}
           </h1>
 
-          <RoundedBox className="h-[20vh]">
+          <button
+            className="col-span-3 cursor-pointer"
+            onClick={() => {
+              router.push("/app/lessons/1");
+            }}
+          >
+            <RoundedBox className="w-full h-16">
+              <div className="flex justify-between items-center h-full">
+                <p className="font-bold text-2xl">Continue practice</p>
+                <HugeiconsIcon
+                  icon={ArrowRight02Icon}
+                  strokeWidth={3}
+                  size={32}
+                />
+              </div>
+            </RoundedBox>
+          </button>
+
+          <RoundedBox className="h-56">
             <div className="flex flex-col justify-center items-center h-full">
               <FluentEmoji
                 emoji={streak === 0 ? "🥀" : "🔥"}
@@ -31,21 +53,14 @@ export default function dashboard() {
               <p className="text-xl text-center">streak</p>
             </div>
           </RoundedBox>
-
-          {/* <RoundedBox className="h-[20vh]">
-            <p className="text-center">ranks</p>
-          </RoundedBox> */}
-
-          <RoundedBox className="h-[20vh]">
-            <div className="flex flex-col justify-center items-center h-full">
-              <p className="size-xl font-bold text-5xl text-center">
-                {current ?? 0}
-              </p>
-              <p className="text-center">completed lessons</p>
+          <RoundedBox className="col-span-2 h-56">
+            <div className="flex flex-col justify-center items-center">
+              <p className="text-center">Weekly activity trend</p>
+              <BarChart />
             </div>
           </RoundedBox>
 
-          <RoundedBox className="col-span-2 h-30 max-h-auto">
+          <RoundedBox className="col-span-2 h-36 max-h-auto">
             <div className="flex flex-col justify-center items-center h-full">
               <p className="mb-4 text-center">Progress</p>
 
@@ -57,10 +72,12 @@ export default function dashboard() {
               </div>
             </div>
           </RoundedBox>
-          <RoundedBox className="col-span-2 min-h-[20vh]">
-            <div className="flex flex-col justify-center items-center">
-              <p className="text-center">Weekly activity trend</p>
-              <BarChart />
+          <RoundedBox className="h-36">
+            <div className="flex flex-col justify-center items-center h-full">
+              <p className="size-xl font-bold text-5xl text-center">
+                {current ?? 0}
+              </p>
+              <p className="text-center">completed lessons</p>
             </div>
           </RoundedBox>
         </div>
