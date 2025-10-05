@@ -1,11 +1,13 @@
 "use client";
 import { RoundedBox } from "@/app/components/RoundedBox";
+import { FluentEmoji } from "../components/FluentEmoji";
 import { useContext } from "react";
 
 import { UserContext } from "../context";
 
 export default function dashboard() {
   const progress = 50;
+  const {streak} = useContext(UserContext);
 
   return (
     <main className="flex justify-center items-center p-4 h-auto">
@@ -15,6 +17,12 @@ export default function dashboard() {
 
           <RoundedBox className="h-[20vh]">
             <p className="text-center">streak</p>
+            <h1 className=" flex justify-center items-center text-5xl font-bold size-xl">{streak} 
+
+                <FluentEmoji emoji = {streak === 0? "🥀" : "🔥"} size="3rem"></FluentEmoji>
+
+            </h1>
+            
           </RoundedBox>
 
           <RoundedBox className="h-[20vh]">
