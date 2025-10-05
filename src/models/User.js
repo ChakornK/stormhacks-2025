@@ -8,10 +8,10 @@ const UserSchema = new mongoose.Schema({
   gID: { type: String, required: true },
   name: { type: String, required: true },
   streak: { type: Number, required: true },
-  lastActivity: { type: String, required: true },
+  lastActivity: { type: Number, required: true },
   progressTracker: {
     type: Map,
-    of: ProgressSchema, 
+    of: ProgressSchema,
   },
 });
 

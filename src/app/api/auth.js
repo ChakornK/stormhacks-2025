@@ -12,9 +12,10 @@ export const verifyToken = (token) => {
     (t.iss === "accounts.google.com" ||
       t.iss === "https://accounts.google.com");
 
-  tokenVerificationCache[token] = verified;
+  const res = verified ? [true, t] : [false];
+  tokenVerificationCache[token] = res;
   setTimeout(() => {
     delete tokenVerificationCache[token];
   }, 3600000); // 1 hour
-  return verified;
+  return res;
 };
