@@ -13,4 +13,4 @@ export const FluentEmoji = memo(({ emoji, size }) => {
       }}
     />
   );
-}, true);
+});
