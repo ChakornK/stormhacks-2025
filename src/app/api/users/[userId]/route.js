@@ -24,6 +24,6 @@ export async function GET(req, res) {
     id: user.gID,
     name: user.name,
     streak: user.streak,
-    weeklyActivity: user.weeklyActivity.split(",").map((e) => +e),
+    weeklyActivity: user.weeklyActivity,
   });
 }
