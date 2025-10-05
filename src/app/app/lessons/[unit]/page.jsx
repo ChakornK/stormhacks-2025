@@ -56,19 +56,20 @@ export default function LessonPath() {
             />
           </svg>
 
-        <div className="flex justify-between w-full max-w-[1100px] relative">
-          {buttonOffsets.map((offset, i) => (
-            <div key={i} className="relative" style={{ top: `${offset}px` }}>
-              <CircularButton
-                active={i === 0}
-                onClick={() => {
-                  setSelectedLesson(i + 1);
-                  setOpenLesson(true);
-                }}
-              >
-                <span>{i + 1}</span>
-              </CircularButton>
-            </div>
+          <div className="relative flex justify-between w-full max-w-[1100px]">
+            {buttonOffsets.map((offset, i) => (
+              <div key={i} className="relative" style={{ top: `${offset}px` }}>
+                <CircularButton
+                  active={i === 0}
+                  onClick={() => {
+                    setSelectedLesson(i + 1);
+                    setOpenLesson(true);
+                  }}
+                >
+                  <span>{i + 1}</span>
+                </CircularButton>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -141,21 +142,21 @@ export function LessonModal({ isOpen, onClose }) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 flex justify-center items-center bg-black/30 z-50"
+          className="z-50 fixed inset-0 flex justify-center items-center bg-black/30"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
         >
           <motion.div
-            className="bg-white rounded-2xl shadow-2xl p-8 max-w-xl w-full"
+            className="bg-white shadow-2xl p-8 rounded-2xl w-full max-w-xl"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-2xl font-semibold mb-4">Lesson Question</h2>
-            <div className="text-lg text-gray-700">
+            <h2 className="mb-4 font-semibold text-2xl">Lesson Question</h2>
+            <div className="text-gray-700 text-lg">
               <BlockMath
                 math={question
                   .replaceAll("\\(", "")
