@@ -1,6 +1,15 @@
 export const globalState = {
-  sessions: {},
+  sessions: {}
 };
+
+
+function createEmptySession() {
+  return {
+    currentUnit: null,
+    currentLesson: null,
+    currentQuestion: null, 
+  };
+}
 
 export function getSession(token) {
   if (!globalState.sessions[token]) {
@@ -9,38 +18,24 @@ export function getSession(token) {
   return globalState.sessions[token];
 }
 
-export function createEmptySession() {
-  return {
-    currentUnit: null,
-    currentLesson: null,
-    currentQuestion: null,
-    expectedAnswer: null,
-  };
-}
-
 export function setLesson(token, unit, lesson) {
-  const session = getSession(token);
-  session.currentUnit = unit;
-  session.currentLesson = lesson;
-  return session;
+  const s = getSession(token);
+  s.currentUnit = unit;
+  s.currentLesson = lesson;
+  return s;
 }
 
-export function setQuestion(token, question, expectedAnswer) {
-  const session = getSession(token);
-  session.currentQuestion = question;
-  session.expectedAnswer = expectedAnswer;
-  return session;
+export function setCurrentQuestion(token, values, solution) {
+  const s = getSession(token);
+  s.currentQuestion = { values, solution };
+  return s;
+}
+
+export function getCurrentQuestion(token) {
+  const s = getSession(token);
+  return s.currentQuestion;
 }
 
 export function clearSession(token) {
   delete globalState.sessions[token];
-}
-
-export function getExpectedAnswer(token) {
-  return getSession(token).expectedAnswer;
-}
-
-export function getCurrentLesson(token) {
-  const s = getSession(token);
-  return { unit: s.currentUnit, lesson: s.currentLesson };
 }

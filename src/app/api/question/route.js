@@ -1,6 +1,11 @@
 import { parseQueryParams } from "@/utils/url";
 import fs from "node:fs";
-import { globalState, getSession } from "@/app/globalState";
+import {
+  getSession,
+  setLesson,
+  setCurrentQuestion,
+  getCurrentQuestion,
+} from "@/app/globalState";
 
 const questionBank = {};
 
@@ -16,7 +21,6 @@ for (const unit of fs.readdirSync("./src/questions")) {
   }
 }
 
-
 export async function GET(req) {
   const query = parseQueryParams(req.url);
   const token = req.headers.get("authorization")?.replace("Bearer ", "");
@@ -27,37 +31,34 @@ export async function GET(req) {
   const lesson = query.lesson || session.currentLesson;
 
   if (!unit || !lesson)
-    return Response.json({ error: "Missing unit or lesson" }, { status: 400 });
+    return Response.json({ error: "Missing unit/lesson" }, { status: 400 });
 
-  session.currentUnit = unit;
-  session.currentLesson = lesson;
+  setLesson(token, unit, lesson);
 
-  const questionCollection = questionBank[unit][lesson];
-  const question =
-    questionCollection[Math.floor(Math.random() * questionCollection.length)];
+  const collection = questionBank[unit][lesson];
+  const question = collection[Math.floor(Math.random() * collection.length)];
 
   const values = question.generateValues();
-
-  session.currentQuestion = question;
-  session.expectedAnswer = values.solutions;
+  setCurrentQuestion(token, values.inputs, values.solutions);
 
   return Response.json({
     text: question.generateText(values.inputs),
   });
 }
 
+
 export async function POST(req) {
   const token = req.headers.get("authorization")?.replace("Bearer ", "");
   if (!token) return Response.json({ error: "Missing token" }, { status: 401 });
 
-  const session = getSession(token);
   const body = await req.json();
+  const current = getCurrentQuestion(token);
 
-  if (!session.expectedAnswer)
+  if (!current)
     return Response.json({ error: "No active question" }, { status: 400 });
 
   const correct =
-    JSON.stringify(body.answer) === JSON.stringify(session.expectedAnswer);
+    JSON.stringify(body.answer) === JSON.stringify(current.solution);
 
   return Response.json({ correct });
 }
