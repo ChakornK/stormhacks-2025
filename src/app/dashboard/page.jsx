@@ -1,102 +1,97 @@
-'use client';
+"use client";
 import { RoundedBox } from "@/app/components/RoundedBox";
+import { FluentEmoji } from "../components/FluentEmoji";
+import { useContext } from "react";
 
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { UserContext } from "../context";
 
-export default function dashboard(){
+export default function dashboard() {
+  const progress = 50;
+  const {streak} = useContext(UserContext);
 
-    const data =  [
-   {name: 'sat', value: 1},
-  { name: 'mon', value: 5 },
-  { name: 'tue', value: 3 },
-  { name: 'wed', value: 10 },
-  { name: 'thur', value: 7 },
-  { name: 'fri', value: 2 },
-  {name: 'sun', value: 8}
-];
+  return (
+    <main className="flex justify-center items-center p-4 h-auto">
+      <div className="flex justify-center items-center w-full max-w-5xl">
+        <div className="gap-4 grid grid-cols-3">
+          <h1 className="col-span-3 text-xl">welcome</h1>
 
-const progress = 50;
+          <RoundedBox className="h-[20vh]">
+            <p className="text-center">streak</p>
+            <h1 className=" flex justify-center items-center text-5xl font-bold size-xl">{streak} 
 
-    return(
+                <FluentEmoji emoji = {streak === 0? "🥀" : "🔥"} size="3rem"></FluentEmoji>
 
-     <main className="p-4 flex items-center justify-center h-auto">
-         <div className=" max-w-5xl w-full flex items-center justify-center">
-             <div className="grid grid-cols-3 gap-4">
-                 <RoundedBox className="h-[20vh]">
-                     <p className="text-center">
-                         streak
-                     </p>  
-                 </RoundedBox>
-      
-                 <RoundedBox className="h-[20vh]">
-                     <p className="text-center">
-                         ranks
-                     </p>
-                 </RoundedBox>
+            </h1>
+            
+          </RoundedBox>
 
-                 <RoundedBox className="h-[20vh]">
-                     <p className="text-center">
-                         completed lessons
-                     </p>
-             
-                 </RoundedBox>
+          <RoundedBox className="h-[20vh]">
+            <p className="text-center">ranks</p>
+          </RoundedBox>
 
-                 <RoundedBox className="h-[20vh]">
-                     <p className="text-center">
-                         completed units
-                     </p>
-             
-                 </RoundedBox>
+          <RoundedBox className="h-[20vh]">
+            <p className="text-center">completed lessons</p>
+          </RoundedBox>
 
-                 <RoundedBox className="col-span-2 h-30 h-[20vh]">
-                     <p className="text-center">
-                         complete
-                     </p>
+          <RoundedBox className="h-[20vh]">
+            <p className="text-center">completed units</p>
+          </RoundedBox>
 
-                   <div className="relative w-full bg-sky-500 rounded-full h-5 overflow-hidden">
-                     {/* Fill */}
-                     <div
-                         className="bg-white h-full transition-all duration-300"
-                         style={{ width: `${progress}%` }}
-                     ></div>
+          <RoundedBox className="col-span-2 h-[20vh] h-30">
+            <p className="text-center">complete</p>
 
-                     {/* Centered text */}
-                    <div className="absolute inset-0 flex items-center justify-center text-gray-500 font-medium text-sm">
-                     {progress}%
-                </div>
-</div>
-             
-                 </RoundedBox>
+            <div className="relative bg-sky-500 rounded-full w-full h-5 overflow-hidden">
+              {/* Fill */}
+              <div
+                className="bg-white h-full transition-all duration-300"
+                style={{ width: `${progress}%` }}
+              ></div>
 
-                 <RoundedBox className="col-span-2  min-h-[20vh] h-auto">
-                     <p className="text-center">
-                         Activity
-                     </p>
+              {/* Centered text */}
+              <div className="absolute inset-0 flex justify-center items-center font-medium text-gray-500 text-sm">
+                {progress}%
+              </div>
+            </div>
+          </RoundedBox>
+          <RoundedBox className="flex justify-center items-center col-span-2 min-h-[20vh]">
+            <p className="text-center">activity</p>
+            <BarChart />
+          </RoundedBox>
 
-                     <ResponsiveContainer width="100%" height={300}>
-                         <BarChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                            
-                             <CartesianGrid stroke="#696969ff" strokeDasharray="5 3" />
-                             
-                             <XAxis dataKey="name" className="text-sm text-black-600" label={{ value: 'Days of the Week', position: 'insideBottom', offset: -5, style: { fill: '#5c5c5cff', fontSize: 14, fontWeight: 500 },}} />
-                             <YAxis className="text-sm text-gray-060" />
-                             
-                             <Legend formatter={(value) => value === 'value' ? 'lessons done' : value}/>
-                             <Bar dataKey="value" fill="white" />
-                             
-                         </BarChart>
-                     </ResponsiveContainer>
-                 </RoundedBox>
-
-                 <RoundedBox className="h-[20vh]">
-                     <p className="text-center">
-                         smt
-                     </p>
-                 </RoundedBox>
-             </div>
-         </div>
-     </main>
-
-    );
-
+          <RoundedBox className="h-[20vh]">
+            <p className="text-center">smt</p>
+          </RoundedBox>
+        </div>
+      </div>
+    </main>
+  );
 }
+
+const BarChart = () => {
+  const { weeklyActivity } = useContext(UserContext);
+
+  return (
+    weeklyActivity && (
+      <div className="flex flex-col items-stretch w-72 h-40">
+        <div className="flex justify-evenly items-end border-white border-b-2 border-l-2 grow">
+          {weeklyActivity.map((e, i) => (
+            <div
+              key={i}
+              className="bg-white rounded-t-md w-6"
+              style={{
+                height: `${(e / Math.max(1, ...weeklyActivity)) * 100}%`,
+              }}
+            ></div>
+          ))}
+        </div>
+        <div className="flex justify-evenly text-xs">
+          {["S", "M", "T", "W", "T", "F", "S"].map((e, i) => (
+            <span key={i} className="w-6 text-center">
+              {e}
+            </span>
+          ))}
+        </div>
+      </div>
+    )
+  );
+};
