@@ -59,6 +59,21 @@ export default function RootLayout({ children }) {
     }
   }, [userState.token, pathname]);
 
+  useEffect(() => {
+    (async () => {
+      if (!userState.token || userState.token === "unset") return;
+      const userData = await (
+        await fetch("/api/auth/startSession", {
+          method: "POST",
+          body: JSON.stringify({
+            token: userState.token,
+          }),
+        })
+      ).json();
+      updateUserState(userData);
+    })();
+  }, [userState.token]);
+
   return (
     <html lang="en">
       <head>
