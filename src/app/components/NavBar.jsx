@@ -12,9 +12,9 @@ export const NavBar = () => {
       </div>
 
       {/* User */}
-      <div className="flex items-center mr-2">
+      <div className="flex items-center mr-1">
         {isLoggedIn ? (
-          <button className="flex items-center gap-2 hover:bg-neutral-100 p-2 rounded-lg">
+          <button className="flex items-center gap-2 hover:bg-neutral-100 px-4 py-2 rounded-lg">
             <p>Username</p>
             <div className="border-2 border-gray-200 rounded-full overflow-clip">
               <svg width="32" height="32" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
