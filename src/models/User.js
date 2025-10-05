@@ -13,6 +13,17 @@ const UserSchema = new mongoose.Schema({
     type: Map,
     of: ProgressSchema,
   },
+  weeklyActivity: {
+    type: [Number],
+    required: true,
+  },
 });
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);
+
+export const userSchemaDefaults = {
+  streak: 0,
+  lastActivity: 0,
+  progressTracker: {},
+  weeklyActivity: [0, 0, 0, 0, 0, 0, 0],
+};

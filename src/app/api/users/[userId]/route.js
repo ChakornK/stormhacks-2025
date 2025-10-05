@@ -1,5 +1,5 @@
 import { connectDB } from "@/lib/mongodb";
-import User from "@/models/User";
+import User, { userSchemaDefaults } from "@/models/User";
 
 export async function GET(req, res) {
   const { userId } = await res.params;
@@ -15,9 +15,15 @@ export async function GET(req, res) {
       }
     );
   }
+
+  for (const [key, value] of Object.entries(userSchemaDefaults)) {
+    user[key] = user[key] || value;
+  }
+
   return Response.json({
     id: user.gID,
     name: user.name,
     streak: user.streak,
+    weeklyActivity: user.weeklyActivity.split(",").map((e) => +e),
   });
 }
