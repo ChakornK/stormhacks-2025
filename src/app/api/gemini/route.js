@@ -26,7 +26,7 @@ export async function POST(request) {
     // Initialize Gemini chat
     const chat = genAI
       .getGenerativeModel({
-        model: "gemini-2.0-flash-lite",
+        model: "gemini-2.5-pro",
         systemInstruction: systemPrompt,
       })
       .startChat({
@@ -34,9 +34,6 @@ export async function POST(request) {
           role: msg.role,
           parts: [{ text: msg.content }],
         })),
-        generationConfig: {
-          maxOutputTokens: 200,
-        },
       });
 
     // Stream response
