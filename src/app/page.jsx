@@ -10,7 +10,6 @@ export default function Home() {
   const router = useRouter();
 
   return (
-   
     <main className="flex justify-center items-center gap-8 bg-gradient-to-b from-transparent to-sky-100 w-screen h-screen">
       {/* Title text */}
       <div>
@@ -33,6 +32,5 @@ export default function Home() {
         <FluentEmoji emoji="👋" size="6rem" />
       </div>
     </main>
-    
   );
 }
