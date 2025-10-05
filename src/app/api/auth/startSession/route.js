@@ -4,6 +4,8 @@ import { verifyToken } from "../../auth";
 
 export async function POST(req) {
   const { token } = await req.json();
+  if (!token) return Response.json({ error: "Missing token" }, { status: 401 });
+
   const [v, t] = verifyToken(token);
   if (!v) {
     return Response.json(
