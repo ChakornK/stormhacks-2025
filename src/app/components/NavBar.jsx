@@ -15,9 +15,21 @@ export const NavBar = () => {
     <nav className="top-0 fixed flex justify-between items-center bg-white border-gray-200 border-b-2 w-screen h-16">
       {/* Nav links */}
       <div className="flex items-center gap-2 p-4">
-        <h1 className="bg-clip-text bg-gradient-to-b from-sky-400 to-sky-500 font-bold text-transparent text-3xl">
-          Math helper
-        </h1>
+        <button
+          type="button"
+          className="cursor-pointer"
+          onClick={() => {
+            if (token && token !== "unset") {
+              router.push("/app/dashboard");
+            } else {
+              router.push("/");
+            }
+          }}
+        >
+          <h1 className="bg-clip-text bg-gradient-to-b from-sky-400 to-sky-500 font-bold text-transparent text-3xl">
+            Math helper
+          </h1>
+        </button>
       </div>
 
       {/* User */}

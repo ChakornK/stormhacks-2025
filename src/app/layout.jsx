@@ -75,8 +75,6 @@ export default function RootLayout({ children }) {
     })();
   }, [userState.token]);
 
-  const [[lessons_page, lessons_direction], lessons_setPage] = useState([0, 0]);
-
   return (
     <html lang="en">
       <head>

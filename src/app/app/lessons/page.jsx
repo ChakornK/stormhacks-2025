@@ -1,7 +1,9 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+
 export default () => {
-  return (
-    <main className="p-4">
-      <h1 className="text-4xl">Lessons</h1>
-    </main>
-  );
+  const router = useRouter();
+  router.push("/app/dashboard");
+  return null;
 };
