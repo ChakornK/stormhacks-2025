@@ -205,7 +205,7 @@ export function LessonModal({
           >
             <button
               onClick={onClose}
-              className="top-8 right-8 absolute cursor-pointer"
+              className="top-8 right-8 z-50 absolute cursor-pointer"
             >
               <HugeiconsIcon icon={Cancel01Icon} />
             </button>
@@ -313,7 +313,7 @@ export function LessonModal({
                   : "Skip question"}
               </PrimaryButton>
             </div>
-            <div className="top-8 right-8 bottom-28 absolute w-72">
+            <div className="top-20 right-8 bottom-28 absolute w-72">
               <Chatbot />
             </div>
           </motion.div>
