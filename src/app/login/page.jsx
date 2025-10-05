@@ -20,7 +20,10 @@ export default function login(){
       <GoogleLogin
         onSuccess={(credentialResponse)=> {
           var credentialResponseDecoded = jwtDecode(credentialResponse.credential);
-          console.log(credentialResponseDecoded)
+
+        const accountId = decoded.sub;
+        console.log("Decoded token:", decoded);
+        console.log("Google account id (sub):", accountId);
         }}
         onError={()=> {
           console.log("Login Failed");
