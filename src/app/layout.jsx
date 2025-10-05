@@ -5,7 +5,7 @@ import { NavBar } from "./components/NavBar";
 import { LessonsPaginationContext, UserContext } from "./context";
 import { useCallback, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function RootLayout({ children }) {
   const [userState, setUserState] = useState({});
@@ -47,10 +47,11 @@ export default function RootLayout({ children }) {
 
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   useEffect(() => {
     if (["/", "/login"].includes(pathname)) {
       if (userState.token && userState.token !== "unset") {
-        router.push("/dashboard");
+        router.push(searchParams.get("return") ?? "/app/dashboard");
       }
     } else {
       if (userState.token === "unset") {

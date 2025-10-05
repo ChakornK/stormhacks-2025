@@ -1,12 +1,11 @@
 "use client";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useContext } from "react";
 import { UserContext } from "../context";
 
 export default function Login() {
-  const router = useRouter();
   const { updateUserState } = useContext(UserContext);
 
   const handleSuccess = useCallback(async (credentialResponse) => {
@@ -17,7 +16,6 @@ export default function Login() {
       name: decoded.given_name,
       picture: decoded.picture,
     });
-    router.push("/dashboard");
   });
 
   const handleError = useCallback(() => {
