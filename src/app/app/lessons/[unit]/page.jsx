@@ -55,7 +55,7 @@ export default function LessonPath() {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M 100 150 Q 250 90, 400 150 Q 550 210, 700 150 Q 850 90, 1000 150"
+              d="M 180 150 Q 350 95, 540 160 Q 650 200, 770 150 Q 920 88, 1150 200"
               className="stroke-neutral-400"
               strokeWidth="6"
               fill="transparent"

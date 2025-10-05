@@ -1,19 +1,23 @@
 "use client";
 import { RoundedBox } from "@/app/components/RoundedBox";
 import { FluentEmoji } from "../components/FluentEmoji";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
-import { UserContext } from "../context";
+
+import { LessonsPaginationContext, UserContext } from "../context";
 
 export default function dashboard() {
-  const progress = 50;
+  
+  const {name} = useContext(UserContext);
   const {streak} = useContext(UserContext);
-
+  const {current} = useContext(LessonsPaginationContext);
+  const {total} = useContext(LessonsPaginationContext)
+const progress = current / total;
   return (
     <main className="flex justify-center items-center p-4 h-auto">
       <div className="flex justify-center items-center w-full max-w-5xl">
         <div className="gap-4 grid grid-cols-3">
-          <h1 className="col-span-3 text-xl">welcome</h1>
+          <h1 className="col-span-3 text-3xl">welcome, {name === NaN? "guest": name }</h1>
 
           <RoundedBox className="h-[20vh]">
             <p className="text-center">streak</p>
@@ -25,31 +29,32 @@ export default function dashboard() {
             
           </RoundedBox>
 
-          <RoundedBox className="h-[20vh]">
+          {/* <RoundedBox className="h-[20vh]">
             <p className="text-center">ranks</p>
-          </RoundedBox>
+          </RoundedBox> */}
 
           <RoundedBox className="h-[20vh]">
             <p className="text-center">completed lessons</p>
+            <p className="text-center text-5xl font-bold size-xl">{current === NaN? current : 0}</p>
           </RoundedBox>
 
-          <RoundedBox className="h-[20vh]">
+          {/* <RoundedBox className="h-[20vh]">
             <p className="text-center">completed units</p>
-          </RoundedBox>
+          </RoundedBox> */}
 
-          <RoundedBox className="col-span-2 h-[20vh] h-30">
+          <RoundedBox className="col-span-2 max-h-auto h-30">
             <p className="text-center">complete</p>
 
-            <div className="relative bg-sky-500 rounded-full w-full h-5 overflow-hidden">
+            <div className="relative bg-sky-500 rounded-full w-full h-5 py-4 overflow-hidden">
               {/* Fill */}
               <div
                 className="bg-white h-full transition-all duration-300"
-                style={{ width: `${progress}%` }}
+                style={{ width: `${progress === NaN? progress : 0}%` }}
               ></div>
 
               {/* Centered text */}
               <div className="absolute inset-0 flex justify-center items-center font-medium text-gray-500 text-sm">
-                {progress}%
+                {progress === NaN? progress : 0}%
               </div>
             </div>
           </RoundedBox>
@@ -58,9 +63,9 @@ export default function dashboard() {
             <BarChart />
           </RoundedBox>
 
-          <RoundedBox className="h-[20vh]">
+          {/* <RoundedBox className="h-[20vh]">
             <p className="text-center">smt</p>
-          </RoundedBox>
+          </RoundedBox> */}
         </div>
       </div>
     </main>
