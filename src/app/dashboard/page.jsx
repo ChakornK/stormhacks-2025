@@ -77,8 +77,10 @@ const BarChart = () => {
           ))}
         </div>
         <div className="flex justify-evenly text-xs">
-          {["S", "M", "T", "W", "T", "F", "S"].map((e) => (
-            <span className="w-6 text-center">{e}</span>
+          {["S", "M", "T", "W", "T", "F", "S"].map((e, i) => (
+            <span key={i} className="w-6 text-center">
+              {e}
+            </span>
           ))}
         </div>
       </div>
