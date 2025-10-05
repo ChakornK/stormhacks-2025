@@ -3,9 +3,11 @@ import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { useCallback, useContext } from "react";
 import { UserContext } from "../context";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const { updateUserState } = useContext(UserContext);
+  const router = useRouter();
 
   const handleSuccess = useCallback(async (credentialResponse) => {
     const decoded = jwtDecode(credentialResponse.credential);
@@ -15,6 +17,7 @@ export default function Login() {
       name: decoded.given_name,
       picture: decoded.picture,
     });
+    router.push("/app/dashboard");
   });
 
   const handleError = useCallback(() => {
