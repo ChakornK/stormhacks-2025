@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "katex/dist/katex.min.css";
 import { BlockMath } from "react-katex";
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,15 +11,21 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import {
   ArrowLeft02Icon,
   ArrowRight02Icon,
+  Cancel01Icon,
 } from "@hugeicons/core-free-icons/index";
+import { UserContext } from "@/app/context";
 
 export default function LessonPath() {
+  const { token } = useContext(UserContext);
+
   const { unit } = useParams();
   const [openLesson, setOpenLesson] = useState(false);
   const [selectedLesson, setSelectedLesson] = useState(null);
   const router = useRouter();
   const buttonOffsets = [0, -60, 60, -60, 60];
   const pgClamp = [1, 5];
+
+  const [problemText, setProblemText] = useState("");
 
   const paginate = (newDirection) => {
     router.push(
@@ -57,19 +63,39 @@ export default function LessonPath() {
           </svg>
 
           <div className="relative flex justify-between w-full max-w-[1100px]">
-            {buttonOffsets.map((offset, i) => (
-              <div key={i} className="relative" style={{ top: `${offset}px` }}>
-                <CircularButton
-                  active={i === 0}
-                  onClick={() => {
-                    setSelectedLesson(i + 1);
-                    setOpenLesson(true);
-                  }}
+            {buttonOffsets.map((offset, i) => {
+              return (
+                <div
+                  key={i}
+                  className="relative"
+                  style={{ top: `${offset}px` }}
                 >
-                  <span>{i + 1}</span>
-                </CircularButton>
-              </div>
-            ))}
+                  <CircularButton
+                    active={i === 0}
+                    onClick={() => {
+                      (async () => {
+                        const { text, progress } = await (
+                          await fetch(
+                            `/api/question?unit=${unit}&lesson=${i + 1}`,
+                            {
+                              headers: {
+                                authorization: `Bearer ${token}`,
+                              },
+                            }
+                          )
+                        ).json();
+                        setProblemText(text);
+                      })();
+
+                      setSelectedLesson(i + 1);
+                      setOpenLesson(true);
+                    }}
+                  >
+                    <span>{i + 1}</span>
+                  </CircularButton>
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -122,21 +148,14 @@ export default function LessonPath() {
         }}
         unit={unit}
         lesson={selectedLesson}
+        text={problemText}
       />
     </main>
   );
 }
-import questionData from "@/questions/1/4/2.js";
 
-export function LessonModal({ isOpen, onClose }) {
+export function LessonModal({ isOpen, text = "", onClose }) {
   const [question, setQuestion] = useState("");
-
-  useEffect(() => {
-    if (!isOpen) return;
-    const { inputs } = questionData.generateValues();
-    const text = questionData.generateText(inputs);
-    setQuestion(text);
-  }, [isOpen]);
 
   return (
     <AnimatePresence>
@@ -146,19 +165,24 @@ export function LessonModal({ isOpen, onClose }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={onClose}
         >
           <motion.div
-            className="bg-white shadow-2xl p-8 rounded-2xl w-full max-w-xl"
+            className="relative bg-white shadow-2xl p-4 rounded-2xl w-full max-w-xl"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             onClick={(e) => e.stopPropagation()}
           >
+            <button
+              onClick={onClose}
+              className="top-4 right-4 absolute cursor-pointer"
+            >
+              <HugeiconsIcon icon={Cancel01Icon} />
+            </button>
             <h2 className="mb-4 font-semibold text-2xl">Lesson Question</h2>
             <div className="text-gray-700 text-lg">
               <BlockMath
-                math={question
+                math={text
                   .replaceAll("\\(", "")
                   .replaceAll("\\)", "")
                   .replaceAll(",", " \\\\ ")}

@@ -6,7 +6,7 @@ import {
   setCurrentQuestion,
   getCurrentQuestion,
   getProgress,
-} from "@/app/globalState";
+} from "@/app/api/globalstate";
 
 const questionBank = {};
 const numberOfQuestions = 10;
@@ -46,7 +46,7 @@ export async function GET(req) {
 
   return Response.json({
     text: question.generateText(values.inputs),
-    progress
+    progress,
   });
 }
 
