@@ -11,9 +11,11 @@ import {
   ArrowLeft02Icon,
   ArrowRight02Icon,
   Cancel01Icon,
+  Tick02Icon,
 } from "@hugeicons/core-free-icons/index";
 import { UserContext } from "@/app/context";
 import ReactKatex from "@pkasila/react-katex";
+import { PrimaryButton } from "@/app/components/Button";
 
 export default function LessonPath() {
   const { token, progressTracking } = useContext(UserContext);
@@ -151,13 +153,28 @@ export default function LessonPath() {
         unit={unit}
         lesson={selectedLesson}
         text={problemText}
+        setProblemText={setProblemText}
       />
     </main>
   );
 }
 
-export function LessonModal({ isOpen, text = "", onClose }) {
-  const [question, setQuestion] = useState("");
+export function LessonModal({ isOpen, text = "", onClose, setProblemText }) {
+  const { token } = useContext(UserContext);
+
+  const [qnum, setQnum] = useState(1);
+  useEffect(() => {
+    if (isOpen) {
+      setQnum(1);
+      setCorrectStatus(1);
+    }
+  }, [isOpen]);
+
+  const [answer, setAnswer] = useState("");
+  // 0 = wrong
+  // 1 = not displayed
+  // 2 = correct
+  const [correctStatus, setCorrectStatus] = useState(1);
 
   return (
     <AnimatePresence>
@@ -169,7 +186,7 @@ export function LessonModal({ isOpen, text = "", onClose }) {
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="relative bg-white shadow-2xl p-4 rounded-2xl w-full max-w-[calc(100vw-4rem)]"
+            className="relative bg-white shadow-2xl p-8 rounded-2xl w-full max-w-[calc(100vw-4rem)] h-full max-h-[calc(100vh-4rem)]"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
@@ -177,15 +194,97 @@ export function LessonModal({ isOpen, text = "", onClose }) {
           >
             <button
               onClick={onClose}
-              className="top-4 right-4 absolute cursor-pointer"
+              className="top-8 right-8 absolute cursor-pointer"
             >
               <HugeiconsIcon icon={Cancel01Icon} />
             </button>
-            <h2 className="mb-4 font-semibold text-2xl">Lesson Question</h2>
+            <h2 className="mb-4 font-semibold text-2xl">
+              Question {qnum} of 10
+            </h2>
             <div className="text-gray-700 text-lg">
               <ReactKatex>
                 {text.replaceAll("\\(", "$").replaceAll("\\)", "$")}
               </ReactKatex>
+            </div>
+
+            <div className="flex items-center gap-2 mt-4">
+              <input
+                className="px-2 py-1.5 border-2 border-neutral-300 rounded-lg font-xl"
+                value={answer}
+                disabled={correctStatus === 2}
+                onChange={(e) => {
+                  setAnswer(
+                    e.target.value.replaceAll(
+                      /([^\d.-]|(?<=\d)-|(?<=\..*)\.)/g,
+                      ""
+                    )
+                  );
+                }}
+              />
+
+              {
+                [
+                  <HugeiconsIcon
+                    icon={Cancel01Icon}
+                    strokeWidth={3}
+                    className="text-red-500"
+                  />,
+                  null,
+                  <HugeiconsIcon
+                    icon={Tick02Icon}
+                    strokeWidth={3}
+                    className="text-emerald-500"
+                  />,
+                ][correctStatus]
+              }
+            </div>
+
+            <div className="right-8 bottom-8 absolute flex items-center gap-4">
+              <PrimaryButton
+                disabled={correctStatus === 2}
+                onClick={async () => {
+                  const res = await (
+                    await fetch("/api/question", {
+                      method: "POST",
+                      headers: {
+                        authorization: `Bearer ${token}`,
+                      },
+                      body: JSON.stringify({
+                        answer: [+answer],
+                      }),
+                    })
+                  ).json();
+                  if (res.correct) {
+                    setCorrectStatus(2);
+                  } else {
+                    setCorrectStatus(0);
+                  }
+                }}
+              >
+                Check answer
+              </PrimaryButton>
+              <PrimaryButton
+                onClick={async () => {
+                  const { text } = await (
+                    await fetch("/api/question", {
+                      headers: {
+                        authorization: `Bearer ${token}`,
+                      },
+                    })
+                  ).json();
+                  setProblemText(text);
+                  if (correctStatus === 2) {
+                    setQnum(qnum + 1);
+                  }
+                  setCorrectStatus(1);
+                }}
+              >
+                {correctStatus === 2
+                  ? qnum === 10
+                    ? "Finish"
+                    : "Next question"
+                  : "Skip question"}
+              </PrimaryButton>
             </div>
           </motion.div>
         </motion.div>

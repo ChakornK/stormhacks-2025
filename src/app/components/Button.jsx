@@ -1,7 +1,15 @@
-export const PrimaryButton = ({ children, onClick }) => {
+export const PrimaryButton = ({ children, onClick, disabled }) => {
   return (
     <button
       type="button"
+      style={
+        disabled
+          ? {
+              filter: "saturate(0)",
+              pointerEvents: "none",
+            }
+          : {}
+      }
       className="bg-sky-400 active:mt-1.5 px-6 py-2 border-sky-500 border-b-6 active:border-b-0 rounded-2xl text-white text-lg transition-all duration-75 ease-out cursor-pointer"
       onClick={onClick}
     >
